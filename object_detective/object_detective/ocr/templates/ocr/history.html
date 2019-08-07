@@ -1,0 +1,30 @@
+{% extends 'ocr/base.html' %}
+{% block title %}History{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block main %}
+{% load static %}
+<!-- {#<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">#} -->
+<div class="page-title">
+<h3  class="page-title"> 历史识别 </h3>
+{% if records %}
+    <ul>
+    {% for record in records %}
+            <a href="/ocr/image/{{ record.text_image.id }}/">
+            <p> 查看原图-----图片ID：{{record.text_image.id }} </p>
+            </a>
+                <img src="/static/media/{{ record.text_image.img_path }}" width="150" />
+            <h5>
+                识别结果： {{ record.result }}
+            </h5>
+
+            <h5> {{ record.record_date }} </h5>
+        </a>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p> No result are available. </p>
+{% endif %}
+</div>
+{% endblock %}

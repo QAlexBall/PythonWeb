@@ -1,0 +1,44 @@
+{% extends 'ocr/base.html' %}
+{% block title %}Index{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block main %}
+<div class="page-title">
+<h3 class="page-title">智能相册📷</h3>
+{% for image in contacts %}
+    <a href="/ocr/image/{{ image.id }}/">
+    <p> 查看原图-----图片ID：{{image.id }} </p>
+    </a>
+    <img src="/static/media/{{ image.img_path }}" width="150" height="120"/>
+    <h5>
+        图片内容：{{ image.tag }} 
+    </h5>
+
+    <h5> 上传时间：{{ image.upload_date }} </h5>
+    <a href="{% url 'add_to_favorite' id=image.id %}"><button class="btn btn-primary">加入喜欢</button></a>
+    <a href="{% url 'image' id=image.id %}"><button class="btn btn-primary">文本识别</button></a>
+    <a href="{% url 'delete' id=image.id %}"><button class="btn btn-primary">删除该图</button></a>
+    <h3> </h3>
+    </a>
+    </li>
+{% endfor %}
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <button><a href="?page=1">&laquo; first</a></button>
+            <button><a href="?page={{ contacts.previous_page_number }}">previous</a></button>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <button><a href="?page={{ contacts.next_page_number }}">next</a></button>
+            <button><a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a></button>
+        {% endif %}
+    </span>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'ocr/base.html' %}
+{% block title %}Index{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block main %}
+{% load static %}
+<div class="page-title">
+<h3> 搜索结果🔍 </h3>
+{% if search_result %}
+    <ul>
+    {% for image, distance in search_result %}
+            <a href="/ocr/image/{{ image.id }}/">
+            <p> 查看原图-----图片ID：{{image.id }} </p>
+        </a>
+                <img src="/static/media/{{ image.img_path }}" width="100" height="100"/>
+            <h5>
+                图片内容：{{ image.tag }}  搜索相似度: {{ distance }}
+            </h5>
+
+            <h5> 上传时间：{{ image.upload_date }} </h5>
+            <a href="{% url 'add_to_favorite' id=image.id %}"><button class="btn btn-primary">加入喜欢</button></a>
+            <a href="{% url 'image' id=image.id %}"><button class="btn btn-primary">文本识别</button></a>
+            <h3> </h3>
+        </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p> No result are available. </p>
+{% endif %}
+</div>
+{% endblock %}

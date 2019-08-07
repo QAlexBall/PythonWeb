@@ -1,0 +1,20 @@
+{% extends 'ocr/base.html' %}
+{% block title %}History{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block main %}
+<div class="page-title">
+<h3> 删除图片 </h3>
+
+<img src="/static/media/{{ image.img_path }}" width="150" />"
+<p>删除图片后，历史记录和我的喜欢中的记录也将会被删除，如果确实删除请输入y后点击按钮</p>
+<form action="", method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="confirm" />
+    <div class="form-group">
+        <button class="btn btn-primary">确认删除</button>
+    </div>
+</form>
+</div>
+{% endblock %}

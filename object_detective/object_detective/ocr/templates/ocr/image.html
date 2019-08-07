@@ -1,0 +1,49 @@
+{% extends 'ocr/base.html' %}
+{% block title %}Index{% endblock %}
+
+{% block head %}
+<script type="text/javascript">
+
+    function submit1() {
+        $.ajax({
+            cache: false,
+            type: "get",
+            url: "/ocr/image/",
+            data: {},
+            async: true,
+            beforeSend:function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken","{{ csrf_token }}");
+            },
+            success: function (message) {
+              if (message.status == 'failed') {
+                  alert("error!");
+              }
+              else if (message.status == 'success') {
+                  alert("success")
+                  $("#result").prepend("<li><h5>：" + result + "</h5></li>");
+                  }
+                }
+            });
+        }
+</script>
+{% endblock %}
+
+{% block main %}
+<img src="/static/media/{{ image.img_path }}" width="500px" />
+<form action="", method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <textarea class="form-control" placeholder="no text" row=10 name="result">
+            {{ result }}
+        </textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-block">加入历史</button>
+    </div>
+</form>
+<!-- <input id="botton1" class="btn btn-primary" type="button" value="检测" onclick="submit1()" />
+<ul class="" id="result">
+
+</ul> -->
+
+{% endblock %}
