@@ -1,5 +1,5 @@
-*.jpg
-*.png
+/* *.jpg */
+/* *.png */
 *.pyc
 
 __pycache_/
