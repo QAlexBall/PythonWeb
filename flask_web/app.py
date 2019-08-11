@@ -1,84 +1,106 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+"""
+Flask main web page
+"""
+from flask import Flask, redirect, render_template, request, session, url_for
 import config
-from models import User
-from extensions import db
+import test_blue_print
 from decorators import login_required
+from extensions import db
+from models import User
 
-app = Flask(__name__)
-app.config.from_object(config)
-db.init_app(app)
+APP = Flask(__name__)
+APP.config.from_object(config)
+APP.register_blueprint(test_blue_print.bp)
+db.init_app(APP)
 
 
-
-@app.route('/')
+@APP.route('/')
 @login_required
 def index():
+    '''
+    index
+    '''
     return render_template('index.html')
 
 
-@app.route('/login/', methods=['GET', 'POST'])
+@APP.route('/login/', methods=['GET', 'POST'])
 def login():
+    '''
+    login
+    '''
     if request.method == 'GET':
         return render_template('login.html')
-    else:
-        telephone = request.form.get('telephone')
-        password = request. form.get('password')
-        user = User.query.filter(User.telephone == telephone,
-                                 User.password == password, ).first()
-        if user:
-            session['user_id'] = user.id
-            session.permanent = True
-            return redirect(url_for('index'))
-        else:
-            return render_template('login.html', message={'error: phone or password error!'})
+    telephone = request.form.get('telephone')
+    password = request. form.get('password')
+    user = User.query.filter(User.telephone == telephone,
+                             User.password == password, ).first()
+    if user:
+        session['user_id'] = user.id
+        session.permanent = True
+        return redirect(url_for('index'))
+    return render_template('login.html',
+                           message={'error: phone or password error!'})
 
-@app.route('/register/', methods=['GET', 'POST'])
+
+@APP.route('/register/', methods=['GET', 'POST'])
 def register():
+    '''
+    register
+    '''
     if request.method == 'GET':
         return render_template('register.html')
-    else:
-        telephone = request.form.get('telephone')
-        username = request.form.get('username')
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
+    telephone = request.form.get('telephone')
+    username = request.form.get('username')
+    password1 = request.form.get('password1')
+    password2 = request.form.get('password2')
+    user = User.query.filter(User.telephone == telephone).first()
+    # POST
+    if user:
+        return 'telephone exist! Please change.'
+    if password1 != password2:
+        return 'password confirm error!'
+    user = User(telephone=telephone,
+                username=username,
+                password=password1)
+    db.session.add(user)
+    db.session.commit()
+    return redirect(url_for('login'))
 
-        user = User.query.filter(User.telephone == telephone).first()
-        if user:
-            return 'telephone exist! Please change.'
-        else:
-            if password1 != password2:
-                return 'password confirm error!'
-            else:
-                user = User(telephone=telephone,
-                            username=username,
-                            password=password1)
-                db.session.add(user)
-                db.session.commit()
-                return redirect(url_for('login'))
 
-@app.route('/logout/')
+@APP.route('/logout/')
 def logout():
+    '''
+    logout
+    '''
     session.pop('user_id')
     # del session['user_id']
     # session.clear()
     return redirect(url_for('login'))
 
-@app.route('/question/')
+
+@APP.route('/send_question/')
 @login_required
 def question():
+    '''
+    send_question
+    '''
     if request.method == 'GET':
-        return render_template('question.html')
-    else:
-        pass
+        return render_template('send_question.html')
+    return None
 
-@app.context_processor
+
+@APP.context_processor
 def my_context_processor():
+    '''
+    my_context_processor
+    '''
     user_id = session.get('user_id')
     if user_id:
         user = User.query.filter(User.id == user_id).first()
         if user:
-            return {'user' : user}
+            return {'user': user}
     return {}
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    APP.run(debug=True)

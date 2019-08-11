@@ -1,5 +1,8 @@
 .logo{
-    width: 110px;
+    position: relative;
+    bottom: 13px;
+    width: 46px;
+    left: -15px;
 }
 
 .body{

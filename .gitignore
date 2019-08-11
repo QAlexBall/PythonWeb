@@ -1,5 +1,9 @@
+__pycache_/
 *.jpg
+*.jpeg
 *.png
 *.pyc
+
+.DS_Store
 *.sqlite3
-__pycache_/
+
