@@ -39,7 +39,9 @@ class DevelopmentConfig(Config):
     DB_URI = 'mysql+mysqldb://{}:{}@{}:{}/{}'.format(
         USERNAME, PASSWORD, HOSTNAME, PORT, DATABASE)
     SQLALCHEMY_DATABASE_URI = DB_URI
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    # celery
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 
 class TestingConfig(Config):
