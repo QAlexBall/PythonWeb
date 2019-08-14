@@ -51,6 +51,7 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 {% if user %}
+                <li><a href="{{ url_for('mail.index') }}">Mail</a></li>
                     <li><a href="{{ url_for('login') }}">{{ user.username }}</a></li>
                     <li><a href="{{ url_for('logout') }}">Logout</a> </li>
                 {% else %}

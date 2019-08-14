@@ -1,16 +1,21 @@
-"""
+'''
 Flask main web page
-"""
+'''
 from flask import Flask, redirect, render_template, request, session, url_for
+from celery import Celery
 import config
-import test_blue_print
 from decorators import login_required
 from extensions import db
 from models import User
+from bp_apps.bp_mail import mail
+from bp_apps.bp_test import test_blue_print
 
 APP = Flask(__name__)
 APP.config.from_object(config)
-APP.register_blueprint(test_blue_print.bp)
+CELERY = Celery(APP.name, broker=APP.config['CELERY_BROKER_URL'])
+CELERY.conf.update(APP.config)
+APP.register_blueprint(test_blue_print.BP)
+APP.register_blueprint(mail.BP)
 db.init_app(APP)
 
 
