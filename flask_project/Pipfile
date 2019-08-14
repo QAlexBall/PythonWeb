@@ -14,6 +14,8 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-script = "*"
 celery = "*"
+mysqlclient = "*"
+flask-cache = "*"
 
 [requires]
 python_version = "3.7"
