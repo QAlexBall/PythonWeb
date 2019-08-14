@@ -7,6 +7,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from celery import Celery
 from config import config
 from .main import main as main_blueprint
 from .auth import auth as auth_blueprint
@@ -16,6 +17,7 @@ mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
 migrate = Migrate()
+celery = Celery()
 
 
 def create_app(config_name):
@@ -31,6 +33,7 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+    celery.conf.update(app.config)
     print('register_blueprint', auth_blueprint)
     # add router
     app.register_blueprint(main_blueprint)
