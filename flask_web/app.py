@@ -6,9 +6,13 @@ from celery import Celery
 import config
 from decorators import login_required
 from extensions import db
+<<<<<<< Updated upstream
 from models import User
 from bp_apps.bp_mail import mail
 from bp_apps.bp_test import test_blue_print
+=======
+from models import User, Question
+>>>>>>> Stashed changes
 
 APP = Flask(__name__)
 APP.config.from_object(config)
@@ -25,7 +29,10 @@ def index():
     '''
     index
     '''
-    return render_template('index.html')
+    message = {}
+    message['questions'] = Question.query.order_by(Question.id)
+    print(message)
+    return render_template('index.html', message)
 
 
 @APP.route('/login/', methods=['GET', 'POST'])
@@ -54,12 +61,12 @@ def register():
     '''
     if request.method == 'GET':
         return render_template('register.html')
+    # POST
     telephone = request.form.get('telephone')
     username = request.form.get('username')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
     user = User.query.filter(User.telephone == telephone).first()
-    # POST
     if user:
         return 'telephone exist! Please change.'
     if password1 != password2:
@@ -83,15 +90,21 @@ def logout():
     return redirect(url_for('login'))
 
 
-@APP.route('/send_question/')
+@APP.route('/send_question/', methods=['GET', 'POST'])
 @login_required
-def question():
+def send_question():
     '''
     send_question
     '''
     if request.method == 'GET':
         return render_template('send_question.html')
-    return None
+    # POST
+    title = request.form.get('title')
+    content = request.form.get('content')
+    question = Question(title=title, content=content)
+    db.session.add(question)
+    db.session.commit()
+    return redirect(url_for('index'))
 
 
 @APP.context_processor

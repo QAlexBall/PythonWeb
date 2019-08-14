@@ -5,4 +5,9 @@
 
 {% block main %}
 This is Index Page!
+{% if message %}
+  {% for question in message.questions %}
+    <a href={{ url_for('send_question') }}><p> {{ question.title }} </p></a>
+  {% endfor %}
+{% endif %}
 {% endblock %}
