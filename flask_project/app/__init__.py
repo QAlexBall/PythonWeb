@@ -9,6 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import config
 from .main import main as main_blueprint
+from .auth import auth as auth_blueprint
 
 bootstrap = Bootstrap()
 mail = Mail()
@@ -22,13 +23,16 @@ def create_app(config_name):
     create_app
     '''
     app = Flask(__name__)
-    app.config.from_object(config['config_name'])
-    config['config_name'].init_app(app)
+    #  app.config.from_object(config['config_name'])
+    app.config.from_object(config[str(config_name)])
+    config[str(config_name)].init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
-    # 添加路由和自定义的错误页面
+    print('register_blueprint', auth_blueprint)
+    # add router
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(auth_blueprint)
     return app

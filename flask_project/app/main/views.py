@@ -1,9 +1,13 @@
-#app/main/views.py 
-#...
-@main.route('/',methods=['GET','POST'])
+'''
+Index Page '/'
+'''
+from flask import render_template
+from . import main
+
+
+@main.route('/', methods=['GET', 'POST'])
 def index():
-    form = NameForm()
-    if form.validate_on_submit():
-        #...
-        return redirect(url_for('.index'))
-    #...
+    '''
+    index
+    '''
+    return render_template('index.html')

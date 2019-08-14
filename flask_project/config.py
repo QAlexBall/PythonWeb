@@ -1,7 +1,9 @@
-#config.py 应用的配置
+'''
+Flask Project Config
+'''
 import os
-import pymysql
 basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Config:
     SECRET_KEY = '*****'
@@ -19,21 +21,24 @@ class Config:
     def init_app(app):
         pass
 
+
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or 'sqlite://'
+
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or 'sqlite://'
 
+
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = '*****'
 
-config = {
-    'development' : DevelopmentConfig,
-    'testing' : TestingConfig,
-    'production' : ProductionConfig,
 
-    'default' : DevelopmentConfig
+config = {
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'production': ProductionConfig,
+    'default': DevelopmentConfig
 }
