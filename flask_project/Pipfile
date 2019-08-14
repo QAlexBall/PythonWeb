@@ -16,6 +16,7 @@ flask-script = "*"
 celery = "*"
 mysqlclient = "*"
 flask-cache = "*"
+redis = "*"
 
 [requires]
 python_version = "3.7"
