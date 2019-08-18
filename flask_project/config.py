@@ -32,7 +32,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     # db config 
     USERNAME = 'root'
-    PASSWORD = ''
+    PASSWORD = 'zhuderen'
     HOSTNAME = '127.0.0.1'
     PORT = '3306'
     DATABASE = 'flask_project'
