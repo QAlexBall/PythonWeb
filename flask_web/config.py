@@ -10,7 +10,7 @@ SECRET_KEY = os.urandom(24)
 
 # db config
 USERNAME = 'root'
-PASSWORD = ''
+PASSWORD = 'zhuderen'
 HOSTNAME = '127.0.0.1'
 PORT = '3306'
 DATABASE = 'flask_web'

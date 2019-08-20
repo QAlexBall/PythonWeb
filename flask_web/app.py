@@ -6,13 +6,9 @@ from celery import Celery
 import config
 from decorators import login_required
 from extensions import db
-<<<<<<< Updated upstream
-from models import User
 from bp_apps.bp_mail import mail
 from bp_apps.bp_test import test_blue_print
-=======
 from models import User, Question
->>>>>>> Stashed changes
 
 APP = Flask(__name__)
 APP.config.from_object(config)
@@ -32,7 +28,7 @@ def index():
     message = {}
     message['questions'] = Question.query.order_by(Question.id)
     print(message)
-    return render_template('index.html', message)
+    return render_template('index.html', message=message)
 
 
 @APP.route('/login/', methods=['GET', 'POST'])
