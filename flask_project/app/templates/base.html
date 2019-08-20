@@ -40,7 +40,7 @@
                 <a left="-15px" href="{{ url_for('main.index') }}">Index <span class="sr-only">(current)</span></a>
               </li>
               <li>
-                  <a href="{{ url_for('main.index') }}">SendQuestion</a>
+                  <a href="{{ url_for('main.send_question') }}">SendQuestion</a>
               </li>
             </ul>
             <form class="navbar-form navbar-left">
@@ -52,11 +52,11 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user %}
                 <li><a href="{{ url_for('main.index') }}">Mail</a></li>
-                    <li><a href="{{ url_for('main.index') }}">{{ user.username }}</a></li>
-                    <li><a href="{{ url_for('main.index') }}">Logout</a> </li>
+                    <li><a href="{{ url_for('main.login') }}">{{ user.username }}</a></li>
+                    <li><a href="{{ url_for('main.logout') }}">Logout</a> </li>
                 {% else %}
-                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                    <li><a href="{{ url_for('main.index') }}">Register</a> </li>
+                    <li><a href="{{ url_for('main.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('main.register') }}">Register</a> </li>
                 {% endif %}
 
             </ul>

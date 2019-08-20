@@ -4,5 +4,15 @@
 {% block head %}{% endblock %}
 
 {% block main %}
+
+{% if message %}
+  {% for dis in message.discuss %}
+    <li> 
+       {{ dis.title }}
+    </li>
+  {% endfor %}
+{% else %}
 This is Index Page!
+{% endif %}
+
 {% endblock %}
