@@ -17,6 +17,8 @@ celery = "*"
 mysqlclient = "*"
 flask-cache = "*"
 redis = "*"
+flask-admin = "*"
+flask-login = "*"
 
 [requires]
 python_version = "3.7"

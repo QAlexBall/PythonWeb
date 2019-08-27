@@ -7,6 +7,8 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
+from flask_cors import CORS
 from celery import Celery
 from config import config
 
@@ -15,12 +17,12 @@ mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
 migrate = Migrate()
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
 
 
-def create_app(config_name):
-    '''
-    create_app
-    '''
+def create_app(config_name='default'):
+    """ create app """
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
@@ -29,6 +31,8 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+    login_manager.init_app(app)
+    CORS(app)
     # add router
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
@@ -38,13 +42,14 @@ def create_app(config_name):
 
 
 def create_celery_app(app=None):
+    """ create celery app """
     app = app or create_app('default')
     celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
     TaskBase = celery.Task
 
-
     class ContextTask(TaskBase):
+        """ Context Task """
         abstract = True
 
         def __call__(self, *args, **kwargs):

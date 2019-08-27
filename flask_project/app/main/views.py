@@ -1,11 +1,18 @@
-'''
-Index Page '/'
-'''
+"""
+main app '/'
+"""
 from flask import render_template, request, session, url_for, redirect
+from flask_login import login_required
 from . import main
 from .. import db
 from ..models import User, Discuss
-from ..decorators import login_required
+#  from ..decorators import login_required
+
+
+@main.route('/test_json')
+def test():
+    """ test url """
+    return {'test': 'test_message'}
 
 
 @main.route('/')
@@ -20,28 +27,24 @@ def index():
 
 @main.route('/login/', methods=['GET', 'POST'])
 def login():
-    '''
-    login
-    '''
+    """ login """
     if request.method == 'GET':
         return render_template('login.html')
     telephone = request.form.get('telephone')
-    password = request. form.get('password')
-    user = User.query.filter(User.telephone == telephone,
-                             User.password == password, ).first()
-    if user:
+    password = request.form.get('password')
+    user = User.query.filter(User.telephone == telephone).first()
+    if user and user.verify_password(password):
         session['user_id'] = user.id
         session.permanent = True
         return redirect(url_for('main.index'))
+
     return render_template('login.html',
                            message={'error: phone or password error!'})
 
 
 @main.route('/register/', methods=['GET', 'POST'])
 def register():
-    '''
-    register
-    '''
+    """ register """
     if request.method == 'GET':
         return render_template('register.html')
     # POST
@@ -62,23 +65,19 @@ def register():
     return redirect(url_for('main.login'))
 
 
-@main.route('/logout/')
-def logout():
-    '''
-    logout
-    '''
+@main.route('/old_logout/')
+def old_logout():
+    """ old logout """
     session.pop('user_id')
     # del session['user_id']
     # session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
 
 
 @main.route('/send_discuss/', methods=['GET', 'POST'])
 @login_required
 def send_question():
-    '''
-    send_question
-    '''
+    """ send question """
     if request.method == 'GET':
         return render_template('send_discuss.html')
     # POST
@@ -92,9 +91,7 @@ def send_question():
 
 @main.context_processor
 def my_context_processor():
-    '''
-    my_context_processor
-    '''
+    """ my_context_processor """
     user_id = session.get('user_id')
     if user_id:
         user = User.query.filter(User.id == user_id).first()
