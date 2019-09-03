@@ -1,0 +1,16 @@
+<!-- auth.register  -->
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+
+{% endblock %}
+Register
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_register.css') }}">
+{% endblock %}
+
+{% block main %}
+    <h3 class="page-title">Register</h3>
+    {{ wtf.quick_form(form) }}
+{% endblock %}

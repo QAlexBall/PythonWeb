@@ -4,8 +4,9 @@ Auth Page
 from flask import render_template, request, url_for, flash, redirect
 from flask_login import login_user, logout_user
 from . import auth
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
 from ..models import User
+from .. import db
 
 
 @auth.route('/')
@@ -19,8 +20,7 @@ def login():
     """ login """
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(telephone=form.telephone.data).first()
-        print(user)
+        user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remeber_me.data)
             next_page = request.args.get('next')
@@ -29,6 +29,24 @@ def login():
             return redirect(next_page)
         flash('Invalid username or password')
     return render_template('auth/login.html', form=form)
+
+
+@auth.route('/register/', methods=['GET', 'POST'])
+def register():
+    """ register """
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(
+            telephone=form.telephone.data,
+            email=form.email.data,
+            username=form.username.data,
+            password=form.password.data
+        )
+        db.session.add(user)
+        db.session.commit()
+        flash('You can now login.')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/register.html', form=form)
 
 
 @auth.route('/logout/')
