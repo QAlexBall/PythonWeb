@@ -21,8 +21,7 @@ def index():
     }
     if request.form['submit'] == 'Send':
         # send right away
-        res = send_async_email.delay(email_data)
-        print(res.get())
+        send_async_email.delay(email_data)
         flash('Sending email to {0}'.format(email))
     else:
         # send in one minute
