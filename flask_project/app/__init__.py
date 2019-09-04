@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_cors import CORS
+from flask_misaka import Misaka
 from celery import Celery
 from config import config
 
@@ -15,6 +16,8 @@ mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
 migrate = Migrate()
+misaka = Misaka()
+celery_app = Celery('tasks', broker='amqp://119.23.33.220:5672/', backend='amqp://119.23.33.220:5672/')
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
@@ -29,16 +32,19 @@ def create_app(config_name='default'):
     moment.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+    misaka.init_app(app)
     login_manager.init_app(app)
     CORS(app)
+    celery_app = create_celery_app(app)
     # add router
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
     from .email import email_bp as email_blueprint
+    from .blog import blog as blog_blueprint
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(email_blueprint)
-
+    app.register_blueprint(blog_blueprint)
     return app
 
 

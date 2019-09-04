@@ -19,6 +19,7 @@ flask-cache = "*"
 redis = "*"
 flask-admin = "*"
 flask-login = "*"
+flask-misaka = "*"
 
 [requires]
 python_version = "3.7"

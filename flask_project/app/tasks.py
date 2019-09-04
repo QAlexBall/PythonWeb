@@ -1,8 +1,8 @@
 '''
 Celery Tasks
 '''
-from app import create_celery_app
-celery = create_celery_app()
+from app import celery_app as celery
+
 
 @celery.task
 def send_async_email(email_data):
