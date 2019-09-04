@@ -17,7 +17,6 @@ moment = Moment()
 db = SQLAlchemy()
 migrate = Migrate()
 misaka = Misaka()
-celery_app = Celery('tasks', broker='amqp://119.23.33.220:5672/', backend='amqp://119.23.33.220:5672/')
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
@@ -35,7 +34,6 @@ def create_app(config_name='default'):
     misaka.init_app(app)
     login_manager.init_app(app)
     CORS(app)
-    celery_app = create_celery_app(app)
     # add router
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint

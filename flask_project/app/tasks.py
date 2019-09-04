@@ -1,15 +1,10 @@
-'''
-Celery Tasks
-'''
-<<<<<<< HEAD
-from app import celery_app as celery
-
-=======
-import app
-from app import create_celery_app, mail
+''' Celery Tasks '''
+import sys
+sys.path.append('..')
+from flasky import app
 from flask_mail import Message
+from app import create_celery_app, mail
 celery = create_celery_app()
->>>>>>> 5d07f699ba4ff9a169470eea8bbf69c6520df74c
 
 
 @celery.task
