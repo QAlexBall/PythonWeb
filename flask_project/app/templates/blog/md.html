@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Index{% endblock %}
 
-{% block head %}{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='editor.md/css/editormd.css') }}">
+{% endblock %}
 
 {% block main %}
-<link rel="stylesheet" href="{{ url_for('static', filename='editor.md/css/editormd.css') }}">
 <div id="test-editor">
   <textarea style="display:none;">### 关于 Editor.md
-
 **Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
   </textarea>
 </div>

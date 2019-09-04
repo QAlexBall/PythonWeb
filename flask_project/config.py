@@ -43,8 +43,8 @@ class DevelopmentConfig(Config):
         USERNAME, PASSWORD, HOSTNAME, PORT, DATABASE)
     SQLALCHEMY_DATABASE_URI = DB_URI
     # celery
-    CELERY_BROKER_URL = 'amqp://119.23.33.220:5672/'
-    CELERY_RESULT_BACKEND = 'amqp://119.23.33.220:5672/'
+    CELERY_BROKER_URL = 'amqp://'
+    CELERY_RESULT_BACKEND = 'amqp://'
 
 
 class TestingConfig(Config):
