@@ -21,6 +21,7 @@ flask-admin = "*"
 flask-login = "*"
 flask-misaka = "*"
 flask-markdown = "*"
+flower = "*"
 
 [requires]
 python_version = "3.7"

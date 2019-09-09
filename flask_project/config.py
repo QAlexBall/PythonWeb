@@ -12,12 +12,14 @@ class Config:
     '''
     SECRET_KEY = os.urandom(24)
     MAIL_SERVER = 'smtp.googlemail.com'
+    MAIL_SERVER = 'smtp.qq.com'
     MAIL_PORT = 587
-    #  MAIL_USE_SSL = True
-    MAIL_USE_TLS = True
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    #  MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_DEFAULT_SENDER = 'chriszhu@motherapp.com'
+    MAIL_DEFAULT_SENDER = '1301033476@qq.com'
     FLASKY_MAIL_SUBJECT_PREFIX = '[FLASKY]'
     FLASKY_MAIL_SENDER = '*****'
     FLASKY_ADMIN = '*****'
@@ -43,8 +45,8 @@ class DevelopmentConfig(Config):
         USERNAME, PASSWORD, HOSTNAME, PORT, DATABASE)
     SQLALCHEMY_DATABASE_URI = DB_URI
     # celery
-    CELERY_BROKER_URL = 'amqp://'
-    CELERY_RESULT_BACKEND = 'amqp://'
+    CELERY_BROKER_URL = 'amqp://119.23.33.220:5672/'
+    CELERY_RESULT_BACKEND = 'amqp://119.23.33.220:5672/'
 
 
 class TestingConfig(Config):
