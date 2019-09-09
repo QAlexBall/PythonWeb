@@ -9,15 +9,15 @@ content = """
 ### README
 """
 
-@login_required
 @blog.route('/')
+@login_required
 def index():
     ''' blog index '''
     return render_template('blog/index.html', text=content)
 
 
-@login_required
 @blog.route('/edit/', methods=['GET', 'POST'])
+@login_required
 def edit():
     ''' write blog '''
     return render_template('blog/md.html')

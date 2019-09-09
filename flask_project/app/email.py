@@ -2,14 +2,14 @@
 from flask import Blueprint, render_template, request, flash, \
     url_for, session, redirect, jsonify
 from flask_login import login_required
+
 email_bp = Blueprint('email', __name__, url_prefix='/email')
-from .tasks import send_async_email, long_task
+from .tasks import send_async_email, long_task_async
 
 
-@login_required
 @email_bp.route('/', methods=['GET', 'POST'])
 def index():
-    ''' email index '''
+    """ email index """
     if request.method == 'GET':
         return render_template('mail/index.html')
     email = request.form['email']
@@ -28,21 +28,20 @@ def index():
     return redirect(url_for('email.index'))
 
 
-@login_required
-@email_bp.route('/longtask/', methods=['POST'])
-def longtask():
-    ''' try long task '''
-    task = long_task.apply_async()
+@email_bp.route('/long_task', methods=['POST'])
+def long_task():
+    """ try long task """
+    print('in email long task')
+    task = long_task_async.apply_async()
     return jsonify({}), 202, {
-        'Location': url_for('taskstaus', task_id=task.id)
+        'Location': url_for('email.task_status', task_id=task.id)
     }
 
 
-@login_required
 @email_bp.route('/status/<task_id>')
 def task_status(task_id):
-    ''' task status '''
-    task = long_task.AsyncResult(task_id)
+    """ task status """
+    task = long_task_async.AsyncResult(task_id)
     if task.state == 'PENDING':
         response = {
             'state': task.state,

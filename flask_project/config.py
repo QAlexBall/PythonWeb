@@ -34,7 +34,7 @@ class DevelopmentConfig(Config):
     '''
     Development Config
     '''
-    DEBUG = True
+    DEBUG = False
     # db config 
     USERNAME = 'root'
     PASSWORD = 'zhuderen'

@@ -20,3 +20,9 @@
 .page-title{
     text-align: center;
 }
+
+.progress {
+    width: 50%;
+    height: auto;
+    text-align: center;
+}

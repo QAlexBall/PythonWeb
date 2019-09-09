@@ -19,8 +19,7 @@ def test():
 @login_required
 def index():
     """index"""
-    message = {}
-    message['discuss'] = Discuss.query.order_by(Discuss.id)
+    message = {'discuss': Discuss.query.order_by(Discuss.id)}
     print(message)
     return render_template('index.html', message=message)
 
