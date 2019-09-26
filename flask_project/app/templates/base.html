@@ -43,7 +43,7 @@
                   <a href="{{ url_for('main.send_question') }}">SendQuestion</a>
               </li>
               <li><a href="{{ url_for('blog.edit') }}"> Write </a></li>
-              <li><a href="{{ url_for('blog.index') }}"> Blogs </a></li>
+              <li><a href="{{ url_for('blog.index') }}"> Blog </a></li>
               <li><a href="{{ url_for('email.index') }}">Mail</a></li>
           </ul>
             <form class="navbar-form navbar-left">
@@ -53,7 +53,7 @@
               <button type="submit" class="btn btn-default">Search</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://github.com/QAlexBall"> Github </a></li>
+{#                <li><a href="https://github.com/QAlexBall"> Github </a></li>#}
                 <li><a href="http://119.23.33.220:8088/ocr/"> AI </a></li>
                 {% if current_user.is_authenticated %}
                   <li><a href="http://119.23.33.220:8889"> Jupyter </a></li>
@@ -72,5 +72,6 @@
     {% block main %}
 
     {% endblock %}
+    </div>
 </body>
 </html>

@@ -8,8 +8,9 @@
 {% if message %}
   {% for dis in message.discuss %}
     <li> 
-       {{ dis.title }}
+       {{ dis.title }} => <a> {{ dis.content }}</a>
     </li>
+
   {% endfor %}
 {% else %}
 This is Index Page!

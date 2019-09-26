@@ -20,7 +20,6 @@ def test():
 def index():
     """index"""
     message = {'discuss': Discuss.query.order_by(Discuss.id)}
-    print(message)
     return render_template('index.html', message=message)
 
 

@@ -22,7 +22,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is not None and user.verify_password(form.password.data):
-            login_user(user, form.remeber_me.data)
+            login_user(user, form.remember_me.data)
             next_page = request.args.get('next')
             if next_page is None or not next_page.startswith('/'):
                 next_page = url_for('main.index')
@@ -36,12 +36,10 @@ def register():
     """ register """
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(
-            telephone=form.telephone.data,
-            email=form.email.data,
-            username=form.username.data,
-            password=form.password.data
-        )
+        user = User(telephone=form.telephone.data,
+                    email=form.email.data,
+                    username=form.username.data,
+                    password=form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('You can now login.')

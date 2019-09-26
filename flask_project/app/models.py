@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 class User(UserMixin, db.Model):
     """User Model"""
     __tablename__ = 'users'
@@ -17,8 +18,9 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True)
     username = db.Column(db.String(50), nullable=False)
     password_hash = db.Column(db.String(128))
+
     #  role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    
+
     @property
     def password(self):
         raise AttributeError('password is not a readable attrribute')

@@ -22,6 +22,7 @@ def send_async_email(email_data):
 
 @celery.task(bind=True)
 def long_task_async(self):
+    print(app.config)
     """ Background task that runs a long function with progress reports. """
     verb = ['Starting up', 'Booting', 'Repairing', 'Loading', 'Checking']
     adjective = ['master', 'radiant', 'silent', 'harmonic', 'fast']
