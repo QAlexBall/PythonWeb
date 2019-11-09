@@ -36,6 +36,7 @@ def register():
     """ register """
     form = RegistrationForm()
     if form.validate_on_submit():
+        # noinspection PyArgumentList
         user = User(telephone=form.telephone.data,
                     email=form.email.data,
                     username=form.username.data,

@@ -55,9 +55,10 @@ def register():
         return 'telephone exist! Please change.'
     if password1 != password2:
         return 'password confirm error!'
-    user = User(telephone=telephone,
-                username=username,
-                password=password1)
+    user = User(
+        telephone=telephone,
+        username=username,
+        password=password1)
     db.session.add(user)
     db.session.commit()
     return redirect(url_for('main.login'))

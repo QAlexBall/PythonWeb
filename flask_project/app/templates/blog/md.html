@@ -3,23 +3,31 @@
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='editormd/css/editormd.css') }}">
+  <style>
+
+  </style>
 {% endblock %}
 
 {% block main %}
-  <h3 class="page-title">Title 👉 <input placeholder=""/></h3>
+  <h3 style="color: #00aaaa;font-family: 'Apple Braille',serif" class="page-title"> title
+    <label>
+      <input placeholder=""/>
+    </label>
+  </h3>
   <div id="test-editor">
-    <textarea style="display:none;"></textarea>
+    <label>
+      <textarea style="display:none;"></textarea>
+    </label>
   </div>
   <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='editormd/editormd.min.js') }}"></script>
   <script type="text/javascript">
     $(function() {
-      var editor = editormd("test-editor", {
+      const editor = editormd("test-editor", {
         width: "90%",
-        height: 680,
+        height: 800,
         path: "{{ url_for('static', filename='editormd/lib/') }}"
-      })
+      });
     })
   </script>
-  </html>
 {% endblock %}
