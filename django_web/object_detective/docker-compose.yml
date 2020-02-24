@@ -1,0 +1,10 @@
+version: "2"
+
+services: 
+  django-apache2-smart-album:
+    build: .
+    container_name: django-apache2-smart-album
+    ports:
+      - '8088:80'
+    volumes: 
+      - ./www:/var/www/html

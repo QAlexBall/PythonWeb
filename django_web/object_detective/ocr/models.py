@@ -2,18 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+
 class Image(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    img_path = models.ImageField(upload_to='ocr/image/', blank=True, null=True, max_length=500)
+    img_path = models.ImageField(
+        upload_to='ocr/image/', blank=True, null=True, max_length=500)
+    thumbnail = models.ImageField(
+        upload_to='ocr/image/Thumbnail', blank=True, null=True, max_length=500)
     upload_date = models.DateTimeField(auto_now=True)
     tag = models.TextField()
+
 
 class Favorite(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     add_date = models.DateTimeField(auto_now=True)
+
 
 class Record(models.Model):
 
